@@ -1,1 +1,622 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mambay Kanu — Web Portfolio</title>
+<meta name="description" content="A directory of local businesses I've built websites for — restaurants, finance, wellness, and industry.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#FAF8F3;
+    --surface:#FFFFFF;
+    --surface-2:#F2EFE6;
+    --line:#E6E2D6;
+    --text:#211E17;
+    --text-dim:#5C584C;
+    --text-faint:#8B8676;
+    --accent:#A8762E;
+    --accent-soft:rgba(168,118,46,0.10);
+    --c-restaurants:#B4712F;
+    --c-finance:#54724E;
+    --c-wellness:#A15A72;
+    --c-business:#3F6A88;
+    --radius:14px;
+  }
 
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:
+      radial-gradient(1100px 560px at 12% -8%, rgba(168,118,46,0.07), transparent 60%),
+      radial-gradient(900px 480px at 100% 0%, rgba(63,106,136,0.06), transparent 55%),
+      var(--bg);
+    color:var(--text);
+    font-family:'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    -webkit-font-smoothing:antialiased;
+    line-height:1.5;
+  }
+
+  a{color:inherit;}
+  img{max-width:100%;display:block;}
+
+  .wrap{max-width:1280px;margin:0 auto;padding:0 clamp(20px,5vw,56px);}
+
+  /* ---------- header ---------- */
+  header.site{
+    padding:clamp(56px,9vw,92px) 0 0;
+  }
+  .eyebrow{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:12px;
+    letter-spacing:.16em;
+    text-transform:uppercase;
+    color:var(--accent);
+    display:flex;
+    align-items:center;
+    gap:10px;
+    margin-bottom:22px;
+  }
+  .eyebrow::before{
+    content:"";
+    width:7px;height:7px;border-radius:50%;
+    background:var(--accent);
+    box-shadow:0 0 0 4px var(--accent-soft);
+  }
+  h1{
+    font-family:'Fraunces', serif;
+    font-weight:600;
+    font-size:clamp(36px,5.6vw,62px);
+    line-height:1.05;
+    letter-spacing:-0.01em;
+    margin:0 0 22px;
+    max-width:16ch;
+  }
+  h1 em{
+    font-style:italic;
+    font-weight:300;
+    color:var(--accent);
+  }
+  .lede{
+    font-size:clamp(16px,2vw,19px);
+    color:var(--text-dim);
+    max-width:56ch;
+    margin:0 0 44px;
+  }
+
+  /* ---------- bio card ---------- */
+  .bio{
+    display:grid;
+    grid-template-columns:auto 1fr;
+    gap:26px;
+    background:var(--surface);
+    border:1px solid var(--line);
+    border-radius:20px;
+    padding:clamp(24px,3.4vw,38px);
+    margin-bottom:clamp(48px,7vw,72px);
+    box-shadow:0 24px 50px -36px rgba(33,30,23,0.18);
+  }
+  .bio-avatar{
+    width:64px;height:64px;
+    flex-shrink:0;
+    border-radius:16px;
+    background:linear-gradient(150deg, var(--accent), #7C5522);
+    color:#fff;
+    display:flex;align-items:center;justify-content:center;
+    font-family:'Fraunces', serif;
+    font-weight:600;
+    font-size:22px;
+    letter-spacing:.02em;
+  }
+  .bio-body h2{
+    font-family:'Fraunces', serif;
+    font-size:22px;
+    font-weight:600;
+    margin:2px 0 2px;
+  }
+  .bio-role{
+    font-size:13.5px;
+    color:var(--accent);
+    font-weight:600;
+    margin-bottom:14px;
+    display:block;
+  }
+  .bio-body p{
+    margin:0;
+    color:var(--text-dim);
+    font-size:15px;
+    line-height:1.68;
+    max-width:74ch;
+  }
+  @media (max-width:560px){
+    .bio{grid-template-columns:1fr;}
+  }
+
+  .stat-row{
+    display:flex;
+    flex-wrap:wrap;
+    gap:clamp(28px,5vw,56px);
+    padding-top:28px;
+    margin-top:24px;
+    border-top:1px solid var(--line);
+  }
+  .stat{display:flex;flex-direction:column;gap:4px;}
+  .stat .num{
+    font-family:'Fraunces', serif;
+    font-size:clamp(24px,2.8vw,30px);
+    font-weight:600;
+    color:var(--text);
+  }
+  .stat .lbl{
+    font-size:12px;
+    color:var(--text-faint);
+    font-family:'IBM Plex Mono', monospace;
+    letter-spacing:.04em;
+  }
+
+  /* ---------- filters ---------- */
+  .filter-bar{
+    position:sticky;
+    top:0;
+    z-index:20;
+    background:rgba(250,248,243,0.88);
+    backdrop-filter:blur(10px);
+    border-bottom:1px solid var(--line);
+    padding:18px 0;
+  }
+  .filter-row{
+    display:flex;
+    flex-wrap:wrap;
+    gap:10px;
+    align-items:center;
+  }
+  .filter-row .count{
+    margin-left:auto;
+    font-family:'IBM Plex Mono', monospace;
+    font-size:12.5px;
+    color:var(--text-faint);
+    white-space:nowrap;
+  }
+  .chip{
+    appearance:none;
+    border:1px solid var(--line);
+    background:var(--surface);
+    color:var(--text-dim);
+    font-family:'Inter',sans-serif;
+    font-size:13.5px;
+    font-weight:500;
+    padding:9px 16px;
+    border-radius:100px;
+    cursor:pointer;
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    transition:border-color .15s ease, color .15s ease, background .15s ease;
+  }
+  .chip .dot{width:7px;height:7px;border-radius:50%;background:currentColor;opacity:.9;}
+  .chip:hover{border-color:#C8C2AE; color:var(--text);}
+  .chip.active{
+    background:var(--accent-soft);
+    border-color:var(--accent);
+    color:var(--text);
+  }
+  .chip[data-cat="all"].active{background:var(--surface-2);border-color:#C8C2AE;}
+
+  /* ---------- grid ---------- */
+  main{padding:clamp(40px,6vw,64px) 0 clamp(80px,10vw,120px);}
+  .grid{
+    display:grid;
+    grid-template-columns:repeat(3, 1fr);
+    gap:clamp(18px,2.4vw,26px);
+  }
+  @media (max-width:980px){ .grid{grid-template-columns:repeat(2,1fr);} }
+  @media (max-width:640px){ .grid{grid-template-columns:1fr;} }
+
+  .card{
+    background:var(--surface);
+    border:1px solid var(--line);
+    border-radius:var(--radius);
+    overflow:hidden;
+    display:flex;
+    flex-direction:column;
+    transition:transform .18s ease, border-color .18s ease, box-shadow .18s ease;
+  }
+  .card:hover{
+    transform:translateY(-3px);
+    border-color:#D6D0BF;
+    box-shadow:0 20px 38px -24px rgba(33,30,23,0.22);
+  }
+  .card.hidden{display:none;}
+
+  .thumb{
+    position:relative;
+    width:100%;
+    aspect-ratio:16/10;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    overflow:hidden;
+  }
+  .thumb .emoji{
+    font-size:56px;
+    line-height:1;
+    filter:drop-shadow(0 6px 14px rgba(0,0,0,0.08));
+    transition:transform .3s ease;
+  }
+  .card:hover .thumb .emoji{transform:scale(1.08) translateY(-2px);}
+  .thumb .idx{
+    position:absolute;
+    top:12px; left:12px;
+    font-family:'IBM Plex Mono', monospace;
+    font-size:11px;
+    letter-spacing:.05em;
+    color:rgba(33,30,23,0.55);
+    background:rgba(255,255,255,0.65);
+    backdrop-filter:blur(4px);
+    padding:4px 8px;
+    border-radius:6px;
+  }
+
+  .body{
+    padding:20px 20px 22px;
+    display:flex;
+    flex-direction:column;
+    gap:10px;
+    flex:1;
+  }
+  .tag{
+    display:inline-flex;
+    align-items:center;
+    gap:7px;
+    font-family:'IBM Plex Mono', monospace;
+    font-size:11.5px;
+    letter-spacing:.03em;
+    color:var(--text-faint);
+  }
+  .tag .dot{width:6px;height:6px;border-radius:50%;background:currentColor;}
+  .card h3{
+    font-family:'Fraunces', serif;
+    font-weight:600;
+    font-size:21px;
+    margin:0;
+    line-height:1.2;
+  }
+  .card p.desc{
+    margin:0;
+    font-size:14px;
+    color:var(--text-dim);
+    line-height:1.55;
+    flex:1;
+  }
+  .visit{
+    margin-top:6px;
+    display:inline-flex;
+    align-items:center;
+    gap:7px;
+    font-size:13.5px;
+    font-weight:600;
+    color:var(--text);
+    text-decoration:none;
+    padding-top:12px;
+    border-top:1px solid var(--line);
+  }
+  .visit svg{width:13px;height:13px;transition:transform .15s ease;}
+  .visit:hover{color:var(--accent);}
+  .visit:hover svg{transform:translate(2px,-2px);}
+
+  footer{
+    border-top:1px solid var(--line);
+    padding:36px 0 60px;
+    color:var(--text-faint);
+    font-size:13px;
+    display:flex;
+    justify-content:space-between;
+    flex-wrap:wrap;
+    gap:12px;
+  }
+  footer a{color:var(--text-dim); text-decoration:none;}
+  footer a:hover{color:var(--accent);}
+
+  .empty-state{
+    display:none;
+    padding:80px 0;
+    text-align:center;
+    color:var(--text-faint);
+    font-family:'IBM Plex Mono', monospace;
+    font-size:13px;
+  }
+</style>
+</head>
+<body>
+
+<header class="site">
+  <div class="wrap">
+    <div class="eyebrow">Portfolio · Mambay Kanu</div>
+    <h1>Websites built for <em>real</em> businesses.</h1>
+    <p class="lede">A working directory of the restaurants, financial firms, wellness studios, and industrial companies I've designed and shipped websites for.</p>
+
+    <div class="bio">
+      <div class="bio-avatar">MK</div>
+      <div class="bio-body">
+        <h2>Mambay Kanu</h2>
+        <span class="bio-role">Digital Professional · Atlanta, GA</span>
+        <p>Hi, I'm Mambay Kanu — a digital professional based in Atlanta, GA with over 10 years of experience building websites, growing brands, and solving problems through technology. I started as a freelance web developer in 2015 and have spent the years since helping businesses across healthcare, real estate, retail, and professional services show up better online. My work lives at the intersection of design, strategy, and execution — where a great-looking site also has to actually work for the business behind it.</p>
+        <div class="stat-row">
+          <div class="stat"><span class="num">10+</span><span class="lbl">YEARS EXPERIENCE</span></div>
+          <div class="stat"><span class="num">22</span><span class="lbl">SITES SHIPPED</span></div>
+          <div class="stat"><span class="num">2015</span><span class="lbl">STARTED FREELANCING</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<div class="filter-bar">
+  <div class="wrap filter-row" id="filterRow">
+    <button class="chip active" data-cat="all">All Work</button>
+    <button class="chip" data-cat="restaurants" style="color:var(--c-restaurants)"><span class="dot"></span>Restaurants &amp; Nightlife</button>
+    <button class="chip" data-cat="finance" style="color:var(--c-finance)"><span class="dot"></span>Finance &amp; Tax</button>
+    <button class="chip" data-cat="wellness" style="color:var(--c-wellness)"><span class="dot"></span>Health &amp; Wellness</button>
+    <button class="chip" data-cat="business" style="color:var(--c-business)"><span class="dot"></span>Business &amp; Industrial</button>
+    <span class="count" id="countLabel">22 businesses</span>
+  </div>
+</div>
+
+<main class="wrap">
+  <div class="grid" id="grid"></div>
+  <div class="empty-state" id="emptyState">No businesses in this category — try another filter.</div>
+</main>
+
+<footer class="wrap">
+  <span>Directory last verified August 2026.</span>
+  <span>Built &amp; maintained as a live client portfolio.</span>
+</footer>
+
+<script>
+const CATEGORY_META = {
+  restaurants: { label: "Restaurants & Nightlife", color: "var(--c-restaurants)" },
+  finance:     { label: "Finance & Tax",            color: "var(--c-finance)" },
+  wellness:    { label: "Health & Wellness",        color: "var(--c-wellness)" },
+  business:    { label: "Business & Industrial",    color: "var(--c-business)" },
+};
+
+const BUSINESSES = [
+  {
+    name: "Small Chops & Grill",
+    industry: "Catering & Party Food",
+    category: "restaurants",
+    emoji: "🍢",
+    desc: "Grilled party platters and shareable trays for Atlanta gatherings, prepped and ready in under an hour.",
+    url: "https://smallchopsandgrills.com/"
+  },
+  {
+    name: "Optimum Tax Services",
+    industry: "Tax Preparation",
+    category: "finance",
+    emoji: "🧮",
+    desc: "Atlanta tax specialists helping clients maximize returns with free consultations and IRS representation.",
+    url: "https://optimumtaxservices.com/"
+  },
+  {
+    name: "3i Industries",
+    industry: "Infrastructure & Energy",
+    category: "business",
+    emoji: "🏗️",
+    desc: "A multipurpose company delivering energy, construction, and agriculture solutions across West Africa's ECOWAS region.",
+    url: "https://3iindustries.com/"
+  },
+  {
+    name: "Sam & Izzy's Sweets",
+    industry: "Bakery & Desserts",
+    category: "restaurants",
+    emoji: "🧁",
+    desc: "Chef Sam's custom bakery serving handcrafted sweets and treats made to order.",
+    url: "https://www.samandizzyssweets.com/"
+  },
+  {
+    name: "P.H.A.T.S Martial Arts",
+    industry: "Martial Arts Academy",
+    category: "wellness",
+    emoji: "🥋",
+    desc: "A Forest Park martial arts academy led by a 4th-degree black belt, offering family and private training plans.",
+    url: "https://phatsmartialarts.com/"
+  },
+  {
+    name: "Robotic Solutions Inc.",
+    industry: "Industrial Automation",
+    category: "business",
+    emoji: "🤖",
+    desc: "Controls, robotics programming, and production support engineering for automated manufacturing environments.",
+    url: "https://rsi-ga.com/"
+  },
+  {
+    name: "WealthBuilders",
+    industry: "Wealth Education & Coaching",
+    category: "finance",
+    emoji: "📖",
+    desc: "Faith-based financial education, coaching, and events teaching biblical strategies for building lasting wealth.",
+    url: "https://www.wealthbuilders.org/"
+  },
+  {
+    name: "Community Tax Services",
+    industry: "Tax & Accounting",
+    category: "finance",
+    emoji: "🧾",
+    desc: "A Boston-based tax firm serving all 50 states with tax planning, filing, and financial consulting.",
+    url: "https://communitytaxservices.com/"
+  },
+  {
+    name: "Akumen Wealth",
+    industry: "Tax Strategy & Advisory",
+    category: "finance",
+    emoji: "💰",
+    desc: "Strategic tax and business-structure guidance for high-income professionals looking to protect and grow their wealth.",
+    url: "https://akumenwealth.com/"
+  },
+  {
+    name: "Hive Buckhead",
+    industry: "Restaurant & Bar",
+    category: "restaurants",
+    emoji: "🐝",
+    desc: "Atlanta's Buckhead bistro serving American-new cuisine with soul food flair, daily brunch, and a full sports bar.",
+    url: "https://hivebuckhead.com/"
+  },
+  {
+    name: "Little Lagos",
+    industry: "West African Restaurant",
+    category: "restaurants",
+    emoji: "🍲",
+    desc: "Atlanta's Nigerian restaurant serving Jollof rice, Egusi, and authentic West African dishes late into the night.",
+    url: "https://littlelagosatl.com/"
+  },
+  {
+    name: "Boum Boum ATL",
+    industry: "American Fusion Restaurant",
+    category: "restaurants",
+    emoji: "🥂",
+    desc: "An American fusion restaurant and chic lounge on Buford Highway, blending dinner service with a lively vibe.",
+    url: "https://boumboumrestaurant.com/"
+  },
+  {
+    name: "Yes Body Contour",
+    industry: "Med Spa & Body Contouring",
+    category: "wellness",
+    emoji: "✨",
+    desc: "Pensacola's non-invasive body contouring spa offering lymphatic drainage, wood therapy, and post-surgical care.",
+    url: "https://www.yesbodycontour.com/"
+  },
+  {
+    name: "Le Nouveau Maquis",
+    industry: "West African Restaurant",
+    category: "restaurants",
+    emoji: "🍛",
+    desc: "A Togolese mother-daughter restaurant bringing nearly a decade of authentic West African home cooking to Atlanta.",
+    url: "https://lnmaquis.com/"
+  },
+  {
+    name: "La Cabinet",
+    industry: "Cigar Lounge & Bar",
+    category: "restaurants",
+    emoji: "🚬",
+    desc: "A private, intimate cigar room and bar in Atlanta built for curated smokes, cocktails, and small-group gatherings.",
+    url: "https://lacabinetatl.com/"
+  },
+  {
+    name: "La Vie ATL",
+    industry: "Restaurant & Lounge",
+    category: "restaurants",
+    emoji: "🍷",
+    desc: "Atlanta's premier lounge pairing fine dining and craft cocktails with a private cigar room and open-air patio.",
+    url: "https://lavieatl.com/"
+  },
+  {
+    name: "Pure Lounge",
+    industry: "Hookah Lounge & Bar",
+    category: "restaurants",
+    emoji: "💨",
+    desc: "A café, hookah lounge, and bar near Buckhead known for weekly themed nights and premium hookah flavors.",
+    url: "https://pureloungeatlanta.com/"
+  },
+  {
+    name: "Vanity Restaurant",
+    industry: "Restaurant & Lounge",
+    category: "restaurants",
+    emoji: "🍸",
+    desc: "An Atlanta restaurant and bar with bold decor and curated cocktails built for an intimate night out.",
+    url: "https://www.vanityrestaurantatl.com/"
+  },
+  {
+    name: "42 Bar and Grill",
+    industry: "Sports Bar & Grill",
+    category: "restaurants",
+    emoji: "🏈",
+    desc: "A sports bar and grill in Atlanta blending upscale dining with the energy of game-day viewing.",
+    url: "https://www.42barandgrillatl.com/"
+  },
+  {
+    name: "Bizions Consulting",
+    industry: "Business Management Consulting",
+    category: "business",
+    emoji: "💼",
+    desc: "A solution-based consulting firm offering document control, event coordination, and business growth strategy.",
+    url: "https://bizionsconsulting.com/"
+  },
+  {
+    name: "SLM Agency",
+    industry: "Financial & Business Services",
+    category: "finance",
+    emoji: "🏦",
+    desc: "An Atlanta financial agency covering tax planning, insurance, payroll, marketing, and business development.",
+    url: "https://www.slmagency.com/"
+  },
+  {
+    name: "Candi Chanel Body Bar",
+    industry: "Beauty & Body Spa",
+    category: "wellness",
+    emoji: "💅",
+    desc: "Savannah's premier body spa offering non-surgical body sculpting, skin tightening, and post-op care.",
+    url: "https://candichanel.com/"
+  }
+];
+
+function externalIcon(){
+  return `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7"/><path d="M8 7h9v9"/></svg>`;
+}
+
+const grid = document.getElementById('grid');
+const emptyState = document.getElementById('emptyState');
+const countLabel = document.getElementById('countLabel');
+
+BUSINESSES.forEach((b, i) => {
+  const meta = CATEGORY_META[b.category];
+  const card = document.createElement('article');
+  card.className = 'card';
+  card.dataset.cat = b.category;
+
+  const idxStr = String(i + 1).padStart(2, '0');
+
+  card.innerHTML = `
+    <div class="thumb" style="background:color-mix(in srgb, ${meta.color} 12%, var(--surface-2));">
+      <span class="idx">N&deg; ${idxStr}</span>
+      <span class="emoji">${b.emoji}</span>
+    </div>
+    <div class="body">
+      <span class="tag" style="color:${meta.color}"><span class="dot"></span>${b.industry}</span>
+      <h3>${b.name}</h3>
+      <p class="desc">${b.desc}</p>
+      <a class="visit" href="${b.url}" target="_blank" rel="noopener noreferrer">
+        Visit site ${externalIcon()}
+      </a>
+    </div>
+  `;
+
+  grid.appendChild(card);
+});
+
+function applyFilter(cat){
+  let visible = 0;
+  document.querySelectorAll('.card').forEach(card => {
+    const show = cat === 'all' || card.dataset.cat === cat;
+    card.classList.toggle('hidden', !show);
+    if (show) visible++;
+  });
+  emptyState.style.display = visible === 0 ? 'block' : 'none';
+  countLabel.textContent = cat === 'all'
+    ? `${visible} businesses`
+    : `${visible} of ${BUSINESSES.length} · ${CATEGORY_META[cat].label}`;
+}
+
+document.getElementById('filterRow').addEventListener('click', (e) => {
+  const chip = e.target.closest('.chip');
+  if (!chip) return;
+  document.querySelectorAll('.chip').forEach(c => c.classList.remove('active'));
+  chip.classList.add('active');
+  applyFilter(chip.dataset.cat);
+});
+</script>
+
+</body>
+</html>
